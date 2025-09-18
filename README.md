@@ -1,172 +1,98 @@
+# 🚦 Smart Traffic Management System (AWS-based)
 
-
-## 📄 `README.md`
-
-
-# 🚦 Smart Traffic Management & Accident Alert System on AWS
-
-## 📌 Overview
-This project is a cloud-based solution to monitor real-time traffic conditions, detect accidents using IoT sensor data and image analysis, and alert authorities instantly.  
-It integrates multiple AWS services to process live data, analyze accident images using AI (Rekognition), and display trends on an analytics dashboard.
-
----
-
-## 👥 Team Members
-- [Your Name] (Team Leader)
-- [Member 2 Name]
-- [Member 3 Name]
-
----
-
-## 💡 Features
-- Real-time vehicle sensor simulation using AWS IoT Core
-- Data stream processing with Kinesis and Lambda
-- Automatic accident detection from IoT data
-- Image-based verification using Amazon Rekognition
-- Storage of traffic and accident data in DynamoDB
-- Emergency alerts using SNS (SMS/Email)
-- Traffic trends dashboard with QuickSight
+This project demonstrates an **IoT-enabled Smart Traffic Management System** that uses AWS services for real-time data collection, processing, image analysis, and visualization.
 
 ---
 
 ## 🏗️ Architecture
-```
-
-\[IoT Devices Simulator]
-↓ MQTT
-\[AWS IoT Core]
-↓ Rule Action
-\[AWS Kinesis Data Stream]
-↓ Trigger
-\[AWS Lambda] → \[Amazon DynamoDB]
-↓
-\[Amazon QuickSight]
-↘                 ↙
-\[S3 (Images)] → \[Lambda + Rekognition]
-↓
-\[Amazon SNS Alerts]
 
 ```
-
----
-
-## 🧩 AWS Services Used
-| Service            | Purpose                                |
-|--------------------|------------------------------------------|
-| AWS IoT Core        | Receive real-time sensor data from vehicles |
-| Amazon Kinesis      | Stream and buffer high-volume data            |
-| AWS Lambda          | Serverless backend processing                  |
-| Amazon DynamoDB     | Store processed traffic and accident data      |
-| Amazon S3            | Store uploaded accident images                  |
-| Amazon Rekognition   | Detect accident severity from images            |
-| Amazon SNS            | Send emergency SMS/email alerts                   |
-| Amazon QuickSight     | Visualize live traffic & accident analytics      |
-| AWS IAM                | Secure access control for services                 |
-
-_All services are available under the AWS Free Tier limits._
-
----
-
-## ⚙️ Setup Instructions
-
-### 1. Prerequisites
-- AWS Free Tier account
-- AWS CLI installed and configured (`aws configure`)
-- Node.js or Python installed
-- IAM user with access to: IoT Core, Kinesis, Lambda, DynamoDB, S3, Rekognition, SNS, QuickSight
-
----
-
-### 2. Create IoT Simulator
-- In AWS IoT Core, create a **Thing** and download certificates
-- Attach an IoT policy to allow `iot:Connect` and `iot:Publish`
-- Write a Python script (`iot_simulator.py`) to send random traffic data via MQTT to your IoT Core endpoint
-
----
-
-### 3. Stream & Process Data
-- Create a **Kinesis Data Stream**
-- Create an **IoT Rule** to forward data from IoT Core to the Kinesis stream
-- Create a **Lambda function** to process each record:
-  - Detect overspeed or sudden stop
-  - Store data into **DynamoDB**
-
----
-
-### 4. Accident Image Verification
-- Create an **S3 bucket** for image uploads
-- Configure **S3 Event Trigger** to call a Lambda function on image upload
-- Lambda should:
-  - Call **Amazon Rekognition** to detect damage or accidents
-  - Update the corresponding accident entry in **DynamoDB**
-
----
-
-### 5. Notifications
-- Create an **SNS Topic** and **subscribe your phone/email**
-- From Lambda, if an accident is confirmed, publish alert to SNS
-
----
-
-### 6. Analytics Dashboard
-- In **QuickSight**, connect to your DynamoDB table
-- Create visualizations like:
-  - Traffic volume by time
-  - Accident heatmap by location
-  - Weekly/Monthly accident trends
-
----
-
-## ▶️ Running the Project
-1. Start the `iot_simulator.py` script to push live data.
-2. Upload accident images into the S3 bucket (optional testing).
-3. Monitor DynamoDB for updates.
-4. View live alerts via SMS/Email from SNS.
-5. Explore dashboards in QuickSight.
-
----
-
-## 📦 Folder Structure
+[IoT Devices Simulator] 
+       ↓ MQTT
+[AWS IoT Core] 
+       ↓ Rule Action
+[AWS Kinesis Data Stream] 
+       ↓ Trigger
+[AWS Lambda] → [Amazon DynamoDB]
+                 ↓
+            [Amazon QuickSight]
+       ↘                 ↙
+[S3 (Images)] → [Lambda + Rekognition]
+       ↓
+[Amazon SNS Alerts]
 ```
 
+---
+
+## 📁 Folder Structure
+
+```
 smart-traffic-management/
 │
-├── iot\_simulator.py
-├── lambda\_process\_data/
+├── iot_simulator.py
+├── lambda_process_data/
 │   └── index.py
-├── lambda\_image\_analysis/
+├── lambda_image_analysis/
 │   └── index.py
 ├── dashboard/
-│   └── quicksight\_screenshots/
+│   └── quicksight_screenshots/
 ├── README.md
-└── architecture\_diagram.png
-
+└── architecture_diagram.png
 ```
 
 ---
 
-## 📊 Outcome
-- Automated accident detection system using cloud services
-- Real-time alerts for emergency response
-- Traffic analysis dashboard for city planning
-- Highly scalable, serverless architecture using AWS
+## ⚙️ AWS Services Used
+
+- **AWS IoT Core** – Receive IoT telemetry data via MQTT.
+- **AWS Kinesis Data Streams** – Stream IoT data to processing layer.
+- **AWS Lambda** – Process data and analyze images.
+- **Amazon DynamoDB** – Store structured traffic data.
+- **Amazon S3** – Store images from traffic cameras.
+- **Amazon Rekognition** – Detect vehicles and congestion from images.
+- **Amazon QuickSight** – Visualize traffic analytics.
+- **Amazon SNS** – Send alerts in case of accidents/congestion.
 
 ---
 
-## ⚠️ Notes
-- Delete unused resources after testing to avoid charges.
-- Rekognition has **5000 free images/month** in free tier.
-- QuickSight has a **30-day free trial**.
+## 🚀 Setup Instructions
+
+1. **Deploy IoT Simulator**
+   - Run `iot_simulator.py` to publish sample telemetry data.
+
+2. **Set Up AWS IoT Core**
+   - Create IoT Thing, attach certificates, and configure MQTT topic rules.
+
+3. **Configure Kinesis + Lambda**
+   - Create Kinesis Data Stream.
+   - Attach Lambda (`lambda_process_data/index.py`) as trigger to process and push to DynamoDB.
+
+4. **Set Up S3 + Rekognition Lambda**
+   - Upload images to S3 bucket.
+   - Trigger `lambda_image_analysis/index.py` on new uploads to analyze using Rekognition.
+
+5. **Configure QuickSight Dashboard**
+   - Connect DynamoDB as a dataset source.
+   - Create visualizations for live traffic data.
+
+6. **Set Up SNS Alerts**
+   - Configure SNS topic to send congestion/accident alerts from Lambda.
 
 ---
 
-## 🏁 Future Improvements
-- Use real IoT sensors (GPS, accelerometer) instead of simulator
-- Add live map visualization using Amazon Location Service
-- Integrate ML models for traffic prediction
+## 📸 Screenshots
+
+Include screenshots of your QuickSight dashboard in the `dashboard/quicksight_screenshots` folder.
 
 ---
 
-## 📜 License
-MIT License
+## 📌 Notes
 
+- Make sure to configure proper IAM roles and permissions for each AWS service.
+- All Lambda functions should have environment variables configured for their respective table/bucket/topic names.
+
+---
+
+## 👩‍💻 Author
+
+Developed as part of a Smart City initiative demo.
