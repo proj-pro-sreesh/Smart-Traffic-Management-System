@@ -2,7 +2,7 @@
 
 ## 📄 `README.md`
 
-```
+
 # 🚦 Smart Traffic Management & Accident Alert System on AWS
 
 ## 📌 Overview
@@ -169,7 +169,4 @@ smart-traffic-management/
 
 ## 📜 License
 MIT License
-```
 
-
-⚡ Would you like me to generate and give you the file version?
