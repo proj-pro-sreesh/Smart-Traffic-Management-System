@@ -80,12 +80,6 @@ smart-traffic-management/
 
 ---
 
-## 📸 Screenshots
-
-Include screenshots of your QuickSight dashboard in the `dashboard/quicksight_screenshots` folder.
-
----
-
 ## 📌 Notes
 
 - Make sure to configure proper IAM roles and permissions for each AWS service.
