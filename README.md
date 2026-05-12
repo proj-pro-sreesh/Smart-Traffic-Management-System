@@ -33,11 +33,6 @@ The system extracts frames from traffic videos, uploads them to AWS S3, triggers
 8. AWS IAM
 9. Amazon SQS (optional alert queue integration)
 
----
-
-# Project Architecture
-
-Video Upload → EC2 → Frame Extraction → S3 Upload → Lambda Trigger → Rekognition Custom Labels → DynamoDB + SNS Alerts
 
 ---
 
@@ -455,6 +450,74 @@ aws rekognition stop-project-version \
 ```
 
 ---
+# Screenshots
+
+## AWS Architecture
+![Architecture](screenshots/STMS_architecture.png)
+
+---
+
+## EC2 Video Processing
+![EC2](screenshots/ec2.png)
+
+![EC2 Upload](screenshots/ec2uploadandcapture.png)
+
+---
+
+## Amazon S3 Bucket
+![S3](screenshots/s3.png)
+
+---
+
+## Rekognition Custom Labels
+![Rekognition](screenshots/rekognitionlabel.png)
+
+---
+
+## Lambda Function
+![Lambda](screenshots/rekognitionlambda.png)
+
+---
+
+## DynamoDB Logging
+![DynamoDB](screenshots/dynamodb.png)
+
+---
+
+## SNS Alerts
+![SNS](screenshots/sns.png)
+
+---
+
+## Alert Receiver Lambda
+![Alert Lambda](screenshots/alertlambda.png)
+
+---
+
+## Accident Alert Email
+![Accident Mail](screenshots/accidentalertmail.png)
+
+---
+
+## Traffic Alert Email
+![Traffic Mail](screenshots/trafficalertmail.png)
+
+---
+
+## CloudWatch Logs
+![Accident Logs](screenshots/accidentalertlogs.png)
+
+![Traffic Logs](screenshots/trafficalertlogs.png)
+
+---
+
+## Dataset Preview
+![Dataset](screenshots/trafficdataset.png)
+
+---
+
+## Model Performance
+![Performance](screenshots/labelperformance scores.png)
 
 # Future Improvements
 
