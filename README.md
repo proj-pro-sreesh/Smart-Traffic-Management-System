@@ -517,7 +517,7 @@ aws rekognition stop-project-version \
 ---
 
 ## Model Performance
-![Performance](screenshots/labelperformance scores.png)
+![Performance](screenshots/labelperformance.png)
 
 # Future Improvements
 
